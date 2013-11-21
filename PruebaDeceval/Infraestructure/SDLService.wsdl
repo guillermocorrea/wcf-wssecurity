@@ -1,0 +1,1666 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<s1:definitions name="SDLServiceDefinitions" targetNamespace="http://deceval.com/sdl/services/" xmlns="" xmlns:s0="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:s1="http://schemas.xmlsoap.org/wsdl/" xmlns:s2="http://deceval.com/sdl/services/" xmlns:s3="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy">
+  <wsp:UsingPolicy s1:Required="true"/>
+  <wsp:Policy s0:Id="PolicyAuth">
+    <wssp:Identity xmlns:wssp="http://www.bea.com/wls90/security/policy">
+      <wssp:SupportedTokens>
+        <!-- Use UsernameToken for authentication -->
+        <wssp:SecurityToken IncludeInMessage="true" TokenType="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#UsernameToken">
+          <wssp:UsePassword Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText"/>
+        </wssp:SecurityToken>
+      </wssp:SupportedTokens>
+    </wssp:Identity>
+  </wsp:Policy>
+  <wsp:Policy s0:Id="PolicySign">
+    <wssp:Integrity xmlns:wls="http://www.bea.com/wls90/security/policy/wsee#part" xmlns:wssp="http://www.bea.com/wls90/security/policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+      <wssp:SignatureAlgorithm URI="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+      <wssp:CanonicalizationAlgorithm URI="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+      <wssp:Target>
+        <wssp:DigestAlgorithm URI="http://www.w3.org/2000/09/xmldsig#sha1"/>
+        <wssp:MessageParts Dialect="http://www.bea.com/wls90/security/policy/wsee#part">
+						wls:SystemHeaders()			
+				</wssp:MessageParts>
+      </wssp:Target>
+      <wssp:Target>
+        <wssp:DigestAlgorithm URI="http://www.w3.org/2000/09/xmldsig#sha1"/>
+        <wssp:MessageParts Dialect="http://www.bea.com/wls90/security/policy/wsee#part">
+									wls:SecurityHeader(wsu:Timestamp)			
+					</wssp:MessageParts>
+      </wssp:Target>
+      <wssp:Target>
+        <wssp:DigestAlgorithm URI="http://www.w3.org/2000/09/xmldsig#sha1"/>
+        <wssp:MessageParts Dialect="http://schemas.xmlsoap.org/2002/12/wsse#part">				
+						wsp:Body()			
+					</wssp:MessageParts>
+      </wssp:Target>
+      <wssp:SupportedTokens>
+        <wssp:SecurityToken IncludeInMessage="true" TokenType="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-x509-token-profile-1.0#X509v3">
+          <wssp:TokenIssuer>CN=BANCOLOMBIAISSUING1CA,DC=bancolombia,DC=corp,CN=BANCOLOMBIAPOLICYNETCA,CN=Pruebas_Bancolombia,OU=VICEPRESIDENCIA DE TECNOLOGIA,O=BANCOLOMBIA S.A.,L=MEDELLIN,ST=ANTIOQUIA,C=CO,CN=BANCOLOMBIAROOTCA,1.2.840.113549.1.9.1=#16196a726f6472696775657a406465636576616c2e636f6d2e636f,CN=dcta103,OU=Tecnologia,O=Deceval,L=Bogota,ST=Cundinamarca,C=CO,CN=certificadorapruebas,OU=Deceval Tecnologia,O=Certificadora de Pruebas,L=BogotaDC,ST=Bogota,C=CO,CN=bancolombiapruebas,OU=Tecnologia Deceval,O=Bancolombia de Pruebas,L=BogotaDC,ST=Bogota,C=CO,</wssp:TokenIssuer>
+        </wssp:SecurityToken>
+      </wssp:SupportedTokens>
+    </wssp:Integrity>
+    <wssp:MessageAge Age="60" xmlns:wssp="http://www.bea.com/wls90/security/policy"/>
+  </wsp:Policy>
+  <s1:types>
+    <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="java:com.deceval.sdl.services.dto.response" xmlns:s0="http://schemas.xmlsoap.org/wsdl/" xmlns:s1="http://deceval.com/sdl/services/" xmlns:s2="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="java:com.deceval.sdl.services.dto"/>
+      <xs:complexType name="RespuestaDocumentoPagareDaneServiceDTO">
+        <xs:sequence>
+          <xs:element minOccurs="1" name="Exitoso" nillable="true" type="xs:boolean">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="Descripcion" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="Respuesta" nillable="true" type="java:DocumentoPagareDaneServiceDTO" xmlns:java="java:com.deceval.sdl.services.dto">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="CodigoError" nillable="true" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="RespuestaAmortizacionSaldosServiceDTO">
+        <xs:sequence>
+          <xs:element minOccurs="1" name="Exitoso" nillable="true" type="xs:boolean">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="Descripcion" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="ListaRespusta" nillable="true" type="java:AmortizacionSaldosServiceDTO" xmlns:java="java:com.deceval.sdl.services.dto">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="CodigoError" nillable="true" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="RespuestaCrearGiradorDaneServiceDTO">
+        <xs:sequence>
+          <xs:element minOccurs="1" name="Exitoso" nillable="true" type="xs:boolean">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="Descripcion" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="Respuesta" nillable="true" type="java:CrearGiradorDaneServiceDTO" xmlns:java="java:com.deceval.sdl.services.dto">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="CodigoError" nillable="true" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="RespuestaConsultarPagaresDTO">
+        <xs:sequence>
+          <xs:element minOccurs="1" name="Exitoso" nillable="true" type="xs:boolean">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="Descripcion" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="ListaRespuesta" nillable="true" type="java:InformacionPagareServiceDTO" xmlns:java="java:com.deceval.sdl.services.dto">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="CodigoError" nillable="true" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="RespuestaDocumentoPagareServiceDTO">
+        <xs:sequence>
+          <xs:element minOccurs="1" name="Exitoso" nillable="true" type="xs:boolean">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="Descripcion" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="ListaRespusta" nillable="true" type="java:DocumentoPagareServiceDTO" xmlns:java="java:com.deceval.sdl.services.dto">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="CodigoError" nillable="true" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="RespuestaCrearGiradorServiceDTO">
+        <xs:sequence>
+          <xs:element minOccurs="1" name="Exitoso" nillable="true" type="xs:boolean">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="Descripcion" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="ListaRespusta" nillable="true" type="java:CrearGiradorServiceDTO" xmlns:java="java:com.deceval.sdl.services.dto">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="CodigoError" nillable="true" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="RespuestaDesembolsoAnotarCuentaDTO">
+        <xs:sequence>
+          <xs:element minOccurs="1" name="Exitoso" nillable="true" type="xs:boolean">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="Descripcion" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="ListaRespusta" nillable="true" type="java:DesembolsoAnotarCuentaDTO" xmlns:java="java:com.deceval.sdl.services.dto">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="CodigoError" nillable="true" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="RespuestaPagaresFirmadosDTO">
+        <xs:sequence>
+          <xs:element minOccurs="1" name="Exitoso" nillable="true" type="xs:boolean">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="Descripcion" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="ListaRespusta" nillable="true" type="java:PagaresFirmadosDTO" xmlns:java="java:com.deceval.sdl.services.dto">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="CodigoError" nillable="true" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="RespuestaCancelacionPagaresServiceDTO">
+        <xs:sequence>
+          <xs:element minOccurs="1" name="Exitoso" nillable="true" type="xs:boolean">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="Descripcion" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="ListaRespusta" nillable="true" type="java:CancelacionPagaresServiceDTO" xmlns:java="java:com.deceval.sdl.services.dto">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="CodigoError" nillable="true" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="RespuestaFirmarPagaresDTO">
+        <xs:sequence>
+          <xs:element minOccurs="1" name="Descripcion" nillable="true" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+    <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="java:com.deceval.sdl.services.dto" xmlns:s0="http://schemas.xmlsoap.org/wsdl/" xmlns:s1="http://deceval.com/sdl/services/" xmlns:s2="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:complexType name="ConsultaPagareServiceDTO">
+        <xs:annotation>
+          <xs:documentation>Objeto del request para el servicio de consultar pagares con los datos para el filtro
+ en la búsqueda de pagarés.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element minOccurs="1" name="IdEstadoPagare" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="1" name="CodigoDeceval" nillable="true" type="xs:long"/>
+          <xs:element minOccurs="1" name="NumPagareEntidad" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="IdTipoIdentificacionFirmante" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="1" name="NumIdentificacionFirmante" nillable="true" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="DocumentoPagareDaneServiceDTO">
+        <xs:sequence>
+          <xs:element minOccurs="1" name="NitEmisor" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="IdClaseDefinicionDocumento" nillable="true" type="xs:long">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="FechaGrabacionPagare" nillable="true" type="xs:dateTime">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="TipoPagare" nillable="true" type="xs:int">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="NumPagareEntidad" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="NumCredito" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="NumReferencia" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="FechaDesembolso" nillable="true" type="xs:dateTime">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="OtorganteTipoId" nillable="true" type="xs:int">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="OtorganteNumId" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="OtorganteCuenta" nillable="true" type="xs:int">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="ApoderadoTipoId" nillable="true" type="xs:int">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="ApoderadoNumId" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="ApoderadoCuenta" nillable="true" type="xs:int">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="ListaCodeudoresAvalistasPagare" nillable="true" type="java:ConsultaGiradorServiceDTO" xmlns:java="java:com.deceval.sdl.services.dto">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="CreditoReembolsableEn" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="NumUnidadesUVR" nillable="true" type="xs:decimal">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="ValorPesosDesembolso" nillable="true" type="xs:decimal">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="ValorPesosDiligenciamiento" nillable="true" type="xs:decimal">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="TasaInteresRenumEA" nillable="true" type="xs:decimal">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="BaseLiquidacionTasa" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="TasaInteres" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="Modalidad" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="DtfDessembolso" nillable="true" type="xs:decimal">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="Spreed" nillable="true" type="xs:decimal">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="TasaRedescuento" nillable="true" type="xs:decimal">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="DtfEA" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="BaseLiquidacionPlazo" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="PlazoCreditoDe" nillable="true" type="xs:dateTime">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="PlazoCreditoHasta" nillable="true" type="xs:dateTime">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="PeriodoGracia" nillable="true" type="xs:boolean">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="PeriodoGraciaDe" nillable="true" type="xs:dateTime">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="PeriodoGraciaHasta" nillable="true" type="xs:dateTime">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="PeriodoMuerto" nillable="true" type="xs:boolean">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="PeriodoMuertoDe" nillable="true" type="xs:dateTime">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="PeriodoMuertoHasta" nillable="true" type="xs:dateTime">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="ModalidadPagosInteres" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="FechaPagoPrimerCuota" nillable="true" type="xs:dateTime">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="ModalidadPagoCapital" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="FechaPagoPrimerCuotaCapital" nillable="true" type="xs:dateTime">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="OtraModalidadPago" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="NumCuotas" nillable="true" type="xs:int">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="FechaPagoPrimerCuotaInteres" nillable="true" type="xs:dateTime">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="ValorCuotaPesos" nillable="true" type="xs:decimal">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="ValorCuotaUVR" nillable="true" type="xs:decimal">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="PorcentAmortizacionMensual" nillable="true" type="xs:decimal">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="FechaPagoPrimerCuotaMensual" nillable="true" type="xs:dateTime">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="PorcentAmortizacionSemestral" nillable="true" type="xs:decimal">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="FechaPagoPrimerCuotaSemestral" nillable="true" type="xs:dateTime">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="CiudadDesembolso" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="Departamento" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="Pais" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="CodOficina" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="Regional" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="AutorizaDebitoAutomatico" nillable="true" type="xs:boolean">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="Cuenta" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="AdquisicionVivienda" nillable="true" type="xs:boolean">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="ConstruccionViviendaIndividual" nillable="true" type="xs:boolean">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="MejoramientoViviendaInterSoci" nillable="true" type="xs:boolean">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="OtroDestino" nillable="true" type="xs:boolean">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="DestinoOperacion" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="Vis" nillable="true" type="xs:boolean">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="NoVis" nillable="true" type="xs:boolean">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="ListaAmortizaciones" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="CiConCuotasExtras" nillable="true" type="xs:boolean">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="CiValorCuotaExtra" nillable="true" type="xs:decimal">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="CiNumCuotasExtras" nillable="true" type="xs:int">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="CiCEPagaderaCada" nillable="true" type="xs:int">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="CiCEApartirDelMes" nillable="true" type="xs:dateTime">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="IdDocumentoPagare" nillable="true" type="xs:long">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="MensajeRespuesta" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="ListaApoderadoRepresentantePagare" nillable="true" type="java:ConsultaGiradorServiceDTO" xmlns:java="java:com.deceval.sdl.services.dto"/>
+          <xs:element minOccurs="1" name="EmpresaOtorgante" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="CiudadCreacion" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="DeptoCreacion" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="PaisCreacion" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="ValorPesosDesembolsoLetras" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="ValorPesosActual" nillable="true" type="xs:decimal"/>
+          <xs:element minOccurs="1" name="ValorCapitalNumero" nillable="true" type="xs:decimal"/>
+          <xs:element minOccurs="1" name="ValorCapitalLetras" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="MargenRedescuento" nillable="true" type="xs:decimal"/>
+          <xs:element minOccurs="1" name="PuntosPorcentualesRedescuento" nillable="true" type="xs:decimal"/>
+          <xs:element minOccurs="1" name="ValorDesembolsoUVRLetras" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="TasaInteresRenumEALetras" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="TasaInteresMora" nillable="true" type="xs:decimal"/>
+          <xs:element minOccurs="1" name="FechaVencimientoFinanciero" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="1" name="PlazoNumero" nillable="true" type="xs:decimal"/>
+          <xs:element minOccurs="1" name="PlazoLetras" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="PeriodicidadPlazo" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="PeriodoGraciaNumero" nillable="true" type="xs:decimal"/>
+          <xs:element minOccurs="1" name="PeriodoGraciaLetras" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="PeriodicidadGracia" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="PeriodoMuertoNumero" nillable="true" type="xs:decimal"/>
+          <xs:element minOccurs="1" name="PeriodoMuertoLetras" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="PeriodicidadMuerto" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="NumCuotasLetras" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="ValorCuotaPesosLetras" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="ValorCuotaUVRLetras" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="ValorInteresesNumero" nillable="true" type="xs:decimal"/>
+          <xs:element minOccurs="1" name="ValorInteresesLetras" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="PorcentajeComision" nillable="true" type="xs:decimal"/>
+          <xs:element minOccurs="1" name="PorcentajeCobertura" nillable="true" type="xs:decimal"/>
+          <xs:element minOccurs="1" name="GarantiaAdicional" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="DiaPago" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="1" name="CiConPeriodoGracia" nillable="true" type="xs:boolean"/>
+          <xs:element minOccurs="1" name="TasaNominal" nillable="true" type="xs:decimal"/>
+          <xs:element minOccurs="1" name="TasaNominalLetras" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="TasaInteresMoraLetras" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="TextoAdicional" nillable="true" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="ArchivosAdjuntos" nillable="true" type="java:ArchivoAdjuntoDTO" xmlns:java="java:com.deceval.sdl.services.dto"/>
+          <xs:element minOccurs="1" name="SeguroVida" nillable="true" type="xs:decimal"/>
+          <xs:element minOccurs="1" name="Aval" nillable="true" type="xs:decimal"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ConsultaGiradorServiceDTO">
+        <xs:sequence>
+          <xs:element minOccurs="1" name="GiradorTipoId" nillable="true" type="xs:int">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="GiradorNumId" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="GiradorCuenta" nillable="true" type="xs:int">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="IdRol" nillable="true" type="xs:int">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="IdPersonaRepresentada" nillable="true" type="xs:long"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ArchivoAdjuntoDTO">
+        <xs:sequence>
+          <xs:element minOccurs="1" name="NombreArchivo" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="Contenido" nillable="true" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="CrearGiradorServiceDTO">
+        <xs:sequence>
+          <xs:element minOccurs="1" name="IdentificacionEmisor" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="FkIdClasePersona" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="1" name="FkIdTipoDocumento" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="1" name="NumeroDocumento" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="CorreoElectronico" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="Direccion1PersonaGrupo_PGP" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="Telefono1PersonaGrupo_PGP" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="Fax1PersonaGrupo_PGP" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="Direccion2PersonaGrupo_PGP" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="Telefono2PersonaGrupo_PGP" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="Fax2PersonaGrupo_PGP" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="Direccion3PersonaGrupo_PGP" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="Telefono3PersonaGrupo_PGP" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="Fax3PersonaGrupo_PGP" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="FkIdPaisExpedicion_Nat" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="1" name="FkIdDepartamentoExpedicion_Nat" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="1" name="FkIdCiudadExpedicion_Nat" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="1" name="FkIdPaisDomicilio_Nat" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="1" name="FkIdDepartamentoDomicilio_Nat" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="1" name="FkIdCiudadDomicilio_Nat" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="1" name="FechaExpedicion_Nat" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="1" name="FechaNacimiento_Nat" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="1" name="PrimerApellido_Nat" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="SegundoApellido_Nat" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="NombresNat_Nat" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="FkIdPaisNacionalidad_Nat" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="1" name="FkIdPais_Jur" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="1" name="FkIdDepartamento_Jur" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="1" name="FkIdCiudad_Jur" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="1" name="FkIdPaisCamara_Jur" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="1" name="FkIdDepartamentoCamara_Jur" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="1" name="FkIdCiudadCamara_Jur" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="1" name="FechaConstitucion_Jur" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="1" name="FechaEscritura_Jur" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="1" name="FechaCamara_Jur" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="1" name="RazonSocial_Jur" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="AgenteAutoretenedor_Jur" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="1" name="Declarante_Jur" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="1" name="Residente_Jur" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="1" name="EscrituraNo_Jur" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="NotariaNo_Jur" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="CirculoNo_Jur" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="CamaraComercioNo_Jur" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="LibroNo_Jur" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="RegitroSuper_Jur" nillable="true" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="ListaRepresentantesLegales" nillable="true" type="java:RepresentanteLegalServiceDTO" xmlns:java="java:com.deceval.sdl.services.dto"/>
+          <xs:element minOccurs="1" name="MensajeRespuesta" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="CuentaGirador" nillable="false" type="xs:long"/>
+          <xs:element minOccurs="1" name="Salario" nillable="true" type="xs:double"/>
+          <xs:element minOccurs="1" name="TiempoServicio" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="EstadoCivil" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="Pensionado" nillable="true" type="xs:boolean"/>
+          <xs:element minOccurs="1" name="NumeroCelular" nillable="true" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="RepresentanteLegalServiceDTO">
+        <xs:annotation>
+          <xs:documentation>Representa la información básica de un girador.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element minOccurs="1" name="TipoIdentificacion" nillable="true" type="xs:int">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="NumIdentificacion" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="Cuenta" nillable="true" type="xs:int">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="IdTipoRepresentante" nillable="true" type="xs:int">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="AmortizacionSaldosServiceDTO">
+        <xs:sequence>
+          <xs:element minOccurs="1" name="IdDocumentoPagare_DocPag" nillable="true" type="xs:long"/>
+          <xs:element minOccurs="1" name="CodigoISIN_DocPag" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="CuentaBeneficiario_DocPag" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="ValorPagado_DetOpe" nillable="true" type="xs:decimal"/>
+          <xs:element minOccurs="1" name="ValorAmortizacionCapital_DetOpe" nillable="true" type="xs:decimal"/>
+          <xs:element minOccurs="1" name="ValorInteresesCtes_DetOpe" nillable="true" type="xs:decimal"/>
+          <xs:element minOccurs="1" name="ValorInteresesMora_DetOpe" nillable="true" type="xs:decimal"/>
+          <xs:element minOccurs="1" name="ValorSeguro_DetOpe" nillable="true" type="xs:decimal"/>
+          <xs:element minOccurs="1" name="OtrosValores_DetOpe" nillable="true" type="xs:decimal"/>
+          <xs:element minOccurs="1" name="IdUsuarioSession" nillable="true" type="xs:long"/>
+          <xs:element minOccurs="1" name="NombreUsuarioSession" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="Exitoso" nillable="true" type="xs:boolean"/>
+          <xs:element minOccurs="1" name="MensajeRespuesta" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="CodigoEmisor_AntCta" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="CodigoAdministrador_AntCta" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="NumPagareEntidad_DocPag" nillable="true" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="CrearGiradorDaneServiceDTO">
+        <xs:sequence>
+          <xs:element minOccurs="1" name="IdentificacionEmisor" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="FkIdClasePersona" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="1" name="FkIdTipoDocumento" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="1" name="NumeroDocumento" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="CorreoElectronico" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="Direccion1PersonaGrupo_PGP" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="Telefono1PersonaGrupo_PGP" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="Fax1PersonaGrupo_PGP" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="Direccion2PersonaGrupo_PGP" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="Telefono2PersonaGrupo_PGP" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="Fax2PersonaGrupo_PGP" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="Direccion3PersonaGrupo_PGP" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="Telefono3PersonaGrupo_PGP" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="Fax3PersonaGrupo_PGP" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="FkIdPaisExpedicion_Nat" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="FkIdDepartamentoExpedicion_Nat" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="FkIdCiudadExpedicion_Nat" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="FkIdPaisDomicilio_Nat" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="FkIdDepartamentoDomicilio_Nat" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="FkIdCiudadDomicilio_Nat" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="FechaExpedicion_Nat" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="1" name="FechaNacimiento_Nat" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="1" name="PrimerApellido_Nat" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="SegundoApellido_Nat" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="NombresNat_Nat" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="FkIdPaisNacionalidad_Nat" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="FkIdPais_Jur" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="FkIdDepartamento_Jur" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="FkIdCiudad_Jur" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="FkIdPaisCamara_Jur" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="FkIdDepartamentoCamara_Jur" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="FkIdCiudadCamara_Jur" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="FechaConstitucion_Jur" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="1" name="FechaEscritura_Jur" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="1" name="FechaCamara_Jur" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="1" name="RazonSocial_Jur" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="AgenteAutoretenedor_Jur" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="1" name="Declarante_Jur" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="1" name="Residente_Jur" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="1" name="EscrituraNo_Jur" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="NotariaNo_Jur" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="CirculoNo_Jur" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="CamaraComercioNo_Jur" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="LibroNo_Jur" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="RegitroSuper_Jur" nillable="true" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="ListaRepresentantesLegales" nillable="true" type="java:RepresentanteLegalServiceDTO" xmlns:java="java:com.deceval.sdl.services.dto"/>
+          <xs:element minOccurs="1" name="MensajeRespuesta" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="CuentaGirador" nillable="false" type="xs:long"/>
+          <xs:element minOccurs="1" name="Salario" nillable="true" type="xs:double"/>
+          <xs:element minOccurs="1" name="TiempoServicio" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="EstadoCivil" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="Pensionado" nillable="true" type="xs:boolean"/>
+          <xs:element minOccurs="1" name="NumeroCelular" nillable="true" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="InformacionPagareServiceDTO">
+        <xs:annotation>
+          <xs:documentation>DTO que representa los datos de los pagarés consultados por el usuario mediante
+ Web Service</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element minOccurs="1" name="IdPagareDeceval" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="1" name="NumPagareEntidad" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="FechaGrabacionPagare" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="1" name="FechaFirmaPagare" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="1" name="EstadoPagare" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="NombreOtorgante" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="TipoDocumentoOtorgante" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="NumeroDocumentoOtorgante" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="PdfPagare" nillable="true" type="java:ArchivoAdjuntoDTO" xmlns:java="java:com.deceval.sdl.services.dto"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="CancelacionPagaresServiceDTO">
+        <xs:sequence>
+          <xs:element minOccurs="1" name="NumPagareEntidad_DocPag" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="IdDocumentoPagare_DocPag" nillable="true" type="xs:long"/>
+          <xs:element minOccurs="1" name="CodigoISIN_DocPag" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="CuentaBeneficiario_DocPag" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="ValorPagado_DetOpe" nillable="true" type="xs:decimal"/>
+          <xs:element minOccurs="1" name="ValorAmortizacionCapital_DetOpe" nillable="true" type="xs:decimal"/>
+          <xs:element minOccurs="1" name="ValorInteresesCtes_DetOpe" nillable="true" type="xs:decimal"/>
+          <xs:element minOccurs="1" name="ValorInteresesMora_DetOpe" nillable="true" type="xs:decimal"/>
+          <xs:element minOccurs="1" name="ValorSeguro_DetOpe" nillable="true" type="xs:decimal"/>
+          <xs:element minOccurs="1" name="OtrosValores_DetOpe" nillable="true" type="xs:decimal"/>
+          <xs:element minOccurs="1" name="IdUsuarioSession" nillable="true" type="xs:long"/>
+          <xs:element minOccurs="1" name="NombreUsuarioSession" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="Exitoso" nillable="true" type="xs:boolean"/>
+          <xs:element minOccurs="1" name="MensajeRespuesta" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="CodigoEmisor_AntCta" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="CodigoAdministrador_AntCta" nillable="true" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="DocumentoPagareServiceDTO">
+        <xs:sequence>
+          <xs:element minOccurs="1" name="NitEmisor" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="IdClaseDefinicionDocumento" nillable="true" type="xs:long">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="FechaGrabacionPagare" nillable="true" type="xs:dateTime">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="TipoPagare" nillable="true" type="xs:int">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="NumPagareEntidad" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="NumCredito" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="NumReferencia" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="FechaDesembolso" nillable="true" type="xs:dateTime">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="OtorganteTipoId" nillable="true" type="xs:int">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="OtorganteNumId" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="OtorganteCuenta" nillable="true" type="xs:int">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="ApoderadoTipoId" nillable="true" type="xs:int">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="ApoderadoNumId" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="ApoderadoCuenta" nillable="true" type="xs:int">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="ListaCodeudoresAvalistasPagare" nillable="true" type="java:ConsultaGiradorServiceDTO" xmlns:java="java:com.deceval.sdl.services.dto">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="CreditoReembolsableEn" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="NumUnidadesUVR" nillable="true" type="xs:decimal">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="ValorPesosDesembolso" nillable="true" type="xs:decimal">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="ValorPesosDiligenciamiento" nillable="true" type="xs:decimal">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="TasaInteresRenumEA" nillable="true" type="xs:decimal">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="BaseLiquidacionTasa" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="TasaInteres" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="Modalidad" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="DtfDessembolso" nillable="true" type="xs:decimal">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="Spreed" nillable="true" type="xs:decimal">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="TasaRedescuento" nillable="true" type="xs:decimal">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="DtfEA" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="BaseLiquidacionPlazo" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="PlazoCreditoDe" nillable="true" type="xs:dateTime">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="PlazoCreditoHasta" nillable="true" type="xs:dateTime">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="PeriodoGracia" nillable="true" type="xs:boolean">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="PeriodoGraciaDe" nillable="true" type="xs:dateTime">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="PeriodoGraciaHasta" nillable="true" type="xs:dateTime">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="PeriodoMuerto" nillable="true" type="xs:boolean">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="PeriodoMuertoDe" nillable="true" type="xs:dateTime">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="PeriodoMuertoHasta" nillable="true" type="xs:dateTime">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="ModalidadPagosInteres" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="FechaPagoPrimerCuota" nillable="true" type="xs:dateTime">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="ModalidadPagoCapital" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="FechaPagoPrimerCuotaCapital" nillable="true" type="xs:dateTime">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="OtraModalidadPago" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="NumCuotas" nillable="true" type="xs:int">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="FechaPagoPrimerCuotaInteres" nillable="true" type="xs:dateTime">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="ValorCuotaPesos" nillable="true" type="xs:decimal">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="ValorCuotaUVR" nillable="true" type="xs:decimal">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="PorcentAmortizacionMensual" nillable="true" type="xs:decimal">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="FechaPagoPrimerCuotaMensual" nillable="true" type="xs:dateTime">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="PorcentAmortizacionSemestral" nillable="true" type="xs:decimal">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="FechaPagoPrimerCuotaSemestral" nillable="true" type="xs:dateTime">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="CiudadDesembolso" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="Departamento" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="Pais" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="CodOficina" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="Regional" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="AutorizaDebitoAutomatico" nillable="true" type="xs:boolean">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="Cuenta" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="AdquisicionVivienda" nillable="true" type="xs:boolean">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="ConstruccionViviendaIndividual" nillable="true" type="xs:boolean">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="MejoramientoViviendaInterSoci" nillable="true" type="xs:boolean">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="OtroDestino" nillable="true" type="xs:boolean">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="DestinoOperacion" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="Vis" nillable="true" type="xs:boolean">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="NoVis" nillable="true" type="xs:boolean">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="ListaAmortizaciones" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="CiConCuotasExtras" nillable="true" type="xs:boolean">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="CiValorCuotaExtra" nillable="true" type="xs:decimal">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="CiNumCuotasExtras" nillable="true" type="xs:int">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="CiCEPagaderaCada" nillable="true" type="xs:int">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="CiCEApartirDelMes" nillable="true" type="xs:dateTime">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="IdDocumentoPagare" nillable="true" type="xs:long">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="MensajeRespuesta" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="ListaApoderadoRepresentantePagare" nillable="true" type="java:ConsultaGiradorServiceDTO" xmlns:java="java:com.deceval.sdl.services.dto"/>
+          <xs:element minOccurs="1" name="EmpresaOtorgante" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="CiudadCreacion" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="DeptoCreacion" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="PaisCreacion" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="ValorPesosDesembolsoLetras" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="ValorPesosActual" nillable="true" type="xs:decimal"/>
+          <xs:element minOccurs="1" name="ValorCapitalNumero" nillable="true" type="xs:decimal"/>
+          <xs:element minOccurs="1" name="ValorCapitalLetras" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="MargenRedescuento" nillable="true" type="xs:decimal"/>
+          <xs:element minOccurs="1" name="PuntosPorcentualesRedescuento" nillable="true" type="xs:decimal"/>
+          <xs:element minOccurs="1" name="ValorDesembolsoUVRLetras" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="TasaInteresRenumEALetras" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="TasaInteresMora" nillable="true" type="xs:decimal"/>
+          <xs:element minOccurs="1" name="FechaVencimientoFinanciero" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="1" name="PlazoNumero" nillable="true" type="xs:decimal"/>
+          <xs:element minOccurs="1" name="PlazoLetras" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="PeriodicidadPlazo" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="PeriodoGraciaNumero" nillable="true" type="xs:decimal"/>
+          <xs:element minOccurs="1" name="PeriodoGraciaLetras" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="PeriodicidadGracia" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="PeriodoMuertoNumero" nillable="true" type="xs:decimal"/>
+          <xs:element minOccurs="1" name="PeriodoMuertoLetras" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="PeriodicidadMuerto" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="NumCuotasLetras" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="ValorCuotaPesosLetras" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="ValorCuotaUVRLetras" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="ValorInteresesNumero" nillable="true" type="xs:decimal"/>
+          <xs:element minOccurs="1" name="ValorInteresesLetras" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="PorcentajeComision" nillable="true" type="xs:decimal"/>
+          <xs:element minOccurs="1" name="PorcentajeCobertura" nillable="true" type="xs:decimal"/>
+          <xs:element minOccurs="1" name="GarantiaAdicional" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="DiaPago" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="1" name="CiConPeriodoGracia" nillable="true" type="xs:boolean"/>
+          <xs:element minOccurs="1" name="TasaNominal" nillable="true" type="xs:decimal"/>
+          <xs:element minOccurs="1" name="TasaNominalLetras" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="TasaInteresMoraLetras" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="TextoAdicional" nillable="true" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="ArchivosAdjuntos" nillable="true" type="java:ArchivoAdjuntoDTO" xmlns:java="java:com.deceval.sdl.services.dto"/>
+          <xs:element minOccurs="1" name="SeguroVida" nillable="true" type="xs:decimal"/>
+          <xs:element minOccurs="1" name="Aval" nillable="true" type="xs:decimal"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="PagaresFirmadosDTO">
+        <xs:annotation>
+          <xs:documentation>Descripción de la Clase</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element minOccurs="1" name="IdentificacionEmisor" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="IdDocumentoPagare" nillable="true" type="xs:long">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="NumPagareEntidad" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="MensajeRespuesta" nillable="true" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="DesembolsoAnotarCuentaDTO">
+        <xs:annotation>
+          <xs:documentation>Descripción de la Clase</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element minOccurs="1" name="IdDocumentoPagare" nillable="true" type="xs:long"/>
+          <xs:element minOccurs="1" name="IdentificacionEmisor" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="NumPagareEntidad" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" name="MensajeRespuesta" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Descripción de lo que hace el método</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="InformacionFirmaPagareDTO">
+        <xs:sequence>
+          <xs:element minOccurs="1" name="IdDocumentoPagare" nillable="true" type="xs:long"/>
+          <xs:element minOccurs="1" name="TipoDocumento" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="1" name="NumeroDocumento" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="Clave" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="Motivo" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="IdRolFirmante" nillable="true" type="xs:long"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="ArchivosAdjuntos" nillable="true" type="java:ArchivoAdjuntoDTO" xmlns:java="java:com.deceval.sdl.services.dto"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+    <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="java:com.deceval.sdl.services.dto.common" xmlns:s0="http://schemas.xmlsoap.org/wsdl/" xmlns:s1="http://deceval.com/sdl/services/" xmlns:s2="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:complexType name="HeaderDTO">
+        <xs:annotation>
+          <xs:documentation>Objeto que representa el encabezado de los servicios web</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element minOccurs="1" name="Fecha" nillable="true" type="xs:dateTime"/>
+          <xs:element minOccurs="1" name="Hora" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="Usuario" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="1" name="CodigoDepositante" nillable="true" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+    <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://deceval.com/sdl/services/" xmlns:s0="http://schemas.xmlsoap.org/wsdl/" xmlns:s1="http://deceval.com/sdl/services/" xmlns:s2="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="java:com.deceval.sdl.services.dto.response"/>
+      <xs:import namespace="java:com.deceval.sdl.services.dto.request"/>
+      <xs:element name="crearGiradorServiceDto" type="java:SolicitudCrearGiradorServiceDTO" xmlns:java="java:com.deceval.sdl.services.dto.request"/>
+      <xs:element name="RespuestaAmortizacionSaldosServiceDTO" type="java:RespuestaAmortizacionSaldosServiceDTO" xmlns:java="java:com.deceval.sdl.services.dto.response"/>
+      <xs:element name="RespuestaConsultarPagaresDTO" type="java:RespuestaConsultarPagaresDTO" xmlns:java="java:com.deceval.sdl.services.dto.response"/>
+      <xs:element name="solicitud" type="java:SolicitudCrearPagareServiceDTO" xmlns:java="java:com.deceval.sdl.services.dto.request"/>
+      <xs:element name="desembolsoAnotarCuentaDto" type="java:SolicitudDesembolsoAnotarCuentaDTO" xmlns:java="java:com.deceval.sdl.services.dto.request"/>
+      <xs:element name="RespuestaDesembolsoAnotarCuentaDTO" type="java:RespuestaDesembolsoAnotarCuentaDTO" xmlns:java="java:com.deceval.sdl.services.dto.response"/>
+      <xs:element name="RespuestaPagaresFirmadosDTO" type="java:RespuestaPagaresFirmadosDTO" xmlns:java="java:com.deceval.sdl.services.dto.response"/>
+      <xs:element name="crearPagareDaneServiceDTO" type="java:SolicitudCrearPagareDaneServiceDTO" xmlns:java="java:com.deceval.sdl.services.dto.request"/>
+      <xs:element name="crearGiradorDaneServiceDTO" type="java:SolicitudCrearGiradorDaneServiceDTO" xmlns:java="java:com.deceval.sdl.services.dto.request"/>
+      <xs:element name="RespuestaFirmarPagaresDTO" type="java:RespuestaFirmarPagaresDTO" xmlns:java="java:com.deceval.sdl.services.dto.response"/>
+      <xs:element name="RespuestaDocumentoPagareDaneServiceDTO" type="java:RespuestaDocumentoPagareDaneServiceDTO" xmlns:java="java:com.deceval.sdl.services.dto.response"/>
+      <xs:element name="listaConsultarPagaresDTO" type="java:SolicitudConsultarPagareDTO" xmlns:java="java:com.deceval.sdl.services.dto.request"/>
+      <xs:element name="RespuestaCrearGiradorDaneServiceDTO" type="java:RespuestaCrearGiradorDaneServiceDTO" xmlns:java="java:com.deceval.sdl.services.dto.response"/>
+      <xs:element name="listaCancelacionPagaresServiceDTO" type="java:SolicitudCancelacionPagaresServiceDTO" xmlns:java="java:com.deceval.sdl.services.dto.request"/>
+      <xs:element name="pagaresFirmadosDto" type="java:SolicitudPagaresFirmadosDTO" xmlns:java="java:com.deceval.sdl.services.dto.request"/>
+      <xs:element name="RespuestaDocumentoPagareServiceDTO" type="java:RespuestaDocumentoPagareServiceDTO" xmlns:java="java:com.deceval.sdl.services.dto.response"/>
+      <xs:element name="RespuestaCrearGiradorServiceDTO" type="java:RespuestaCrearGiradorServiceDTO" xmlns:java="java:com.deceval.sdl.services.dto.response"/>
+      <xs:element name="solicitudFirmarPagareDTO" type="java:SolicitudFirmarPagaresDTO" xmlns:java="java:com.deceval.sdl.services.dto.request"/>
+      <xs:element name="solicitudAmortizacionSaldosServiceDTO" type="java:SolicitudAmortizacionSaldosServiceDTO" xmlns:java="java:com.deceval.sdl.services.dto.request"/>
+      <xs:element name="RespuestaCancelacionPagaresServiceDTO" type="java:RespuestaCancelacionPagaresServiceDTO" xmlns:java="java:com.deceval.sdl.services.dto.response"/>
+    </xs:schema>
+    <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="java:com.deceval.sdl.services.dto.request" xmlns:s0="http://schemas.xmlsoap.org/wsdl/" xmlns:s1="http://deceval.com/sdl/services/" xmlns:s2="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="java:com.deceval.sdl.services.dto"/>
+      <xs:import namespace="java:com.deceval.sdl.services.dto.common"/>
+      <xs:complexType name="SolicitudConsultarPagareDTO">
+        <xs:sequence>
+          <xs:element minOccurs="1" name="Header" nillable="true" type="java:HeaderDTO" xmlns:java="java:com.deceval.sdl.services.dto.common"/>
+          <xs:element minOccurs="1" name="ConsultaPagareServiceDTO" nillable="true" type="java:ConsultaPagareServiceDTO" xmlns:java="java:com.deceval.sdl.services.dto"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="SolicitudCrearGiradorServiceDTO">
+        <xs:sequence>
+          <xs:element minOccurs="1" name="Header" nillable="true" type="java:HeaderDTO" xmlns:java="java:com.deceval.sdl.services.dto.common"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="CrearGiradorDTO" nillable="true" type="java:CrearGiradorServiceDTO" xmlns:java="java:com.deceval.sdl.services.dto"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="SolicitudCancelacionPagaresServiceDTO">
+        <xs:sequence>
+          <xs:element minOccurs="1" name="Header" nillable="true" type="java:HeaderDTO" xmlns:java="java:com.deceval.sdl.services.dto.common"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="CancelacionPagaresDTO" nillable="true" type="java:CancelacionPagaresServiceDTO" xmlns:java="java:com.deceval.sdl.services.dto"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="SolicitudCrearPagareServiceDTO">
+        <xs:sequence>
+          <xs:element minOccurs="1" name="Header" nillable="true" type="java:HeaderDTO" xmlns:java="java:com.deceval.sdl.services.dto.common"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="DocumentoPagareServiceDTO" nillable="true" type="java:DocumentoPagareServiceDTO" xmlns:java="java:com.deceval.sdl.services.dto"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="SolicitudPagaresFirmadosDTO">
+        <xs:sequence>
+          <xs:element minOccurs="1" name="Header" nillable="true" type="java:HeaderDTO" xmlns:java="java:com.deceval.sdl.services.dto.common"/>
+          <xs:element minOccurs="1" name="PagaresFirmadosDTO" nillable="true" type="java:PagaresFirmadosDTO" xmlns:java="java:com.deceval.sdl.services.dto"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="SolicitudDesembolsoAnotarCuentaDTO">
+        <xs:sequence>
+          <xs:element minOccurs="1" name="Header" nillable="true" type="java:HeaderDTO" xmlns:java="java:com.deceval.sdl.services.dto.common"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="DesembolsoAnotarCuentaDTO" nillable="true" type="java:DesembolsoAnotarCuentaDTO" xmlns:java="java:com.deceval.sdl.services.dto"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="SolicitudFirmarPagaresDTO">
+        <xs:sequence>
+          <xs:element minOccurs="1" name="Header" nillable="true" type="java:HeaderDTO" xmlns:java="java:com.deceval.sdl.services.dto.common"/>
+          <xs:element minOccurs="1" name="InformacionFirmaPagareDTO" nillable="true" type="java:InformacionFirmaPagareDTO" xmlns:java="java:com.deceval.sdl.services.dto"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="SolicitudAmortizacionSaldosServiceDTO">
+        <xs:sequence>
+          <xs:element minOccurs="1" name="Header" nillable="true" type="java:HeaderDTO" xmlns:java="java:com.deceval.sdl.services.dto.common"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="AmortizacionSaldosDTO" nillable="true" type="java:AmortizacionSaldosServiceDTO" xmlns:java="java:com.deceval.sdl.services.dto"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="SolicitudCrearGiradorDaneServiceDTO">
+        <xs:sequence>
+          <xs:element minOccurs="1" name="Header" nillable="true" type="java:HeaderDTO" xmlns:java="java:com.deceval.sdl.services.dto.common"/>
+          <xs:element minOccurs="1" name="CrearGiradorDTO" nillable="true" type="java:CrearGiradorDaneServiceDTO" xmlns:java="java:com.deceval.sdl.services.dto"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="SolicitudCrearPagareDaneServiceDTO">
+        <xs:sequence>
+          <xs:element minOccurs="1" name="Header" nillable="true" type="java:HeaderDTO" xmlns:java="java:com.deceval.sdl.services.dto.common"/>
+          <xs:element minOccurs="1" name="DocumentoPagareServiceDTO" nillable="true" type="java:DocumentoPagareDaneServiceDTO" xmlns:java="java:com.deceval.sdl.services.dto"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+  </s1:types>
+  <s1:message name="consultarPagares">
+    <s1:part element="s2:listaConsultarPagaresDTO" name="listaConsultarPagaresDTO"/>
+  </s1:message>
+  <s1:message name="consultarPagaresResponse">
+    <s1:part element="s2:RespuestaConsultarPagaresDTO" name="RespuestaConsultarPagaresDTO"/>
+  </s1:message>
+  <s1:message name="cancelacionPagares">
+    <s1:part element="s2:listaCancelacionPagaresServiceDTO" name="listaCancelacionPagaresServiceDTO"/>
+  </s1:message>
+  <s1:message name="cancelacionPagaresResponse">
+    <s1:part element="s2:RespuestaCancelacionPagaresServiceDTO" name="RespuestaCancelacionPagaresServiceDTO"/>
+  </s1:message>
+  <s1:message name="CreacionPagaresCodificado">
+    <s1:part element="s2:crearPagareDaneServiceDTO" name="crearPagareDaneServiceDTO"/>
+  </s1:message>
+  <s1:message name="CreacionPagaresCodificadoResponse">
+    <s1:part element="s2:RespuestaDocumentoPagareDaneServiceDTO" name="RespuestaDocumentoPagareDaneServiceDTO"/>
+  </s1:message>
+  <s1:message name="creacionPagares">
+    <s1:part element="s2:solicitud" name="solicitud"/>
+  </s1:message>
+  <s1:message name="creacionPagaresResponse">
+    <s1:part element="s2:RespuestaDocumentoPagareServiceDTO" name="RespuestaDocumentoPagareServiceDTO"/>
+  </s1:message>
+  <s1:message name="CreacionGiradores">
+    <s1:part element="s2:crearGiradorServiceDto" name="crearGiradorServiceDto"/>
+  </s1:message>
+  <s1:message name="CreacionGiradoresResponse">
+    <s1:part element="s2:RespuestaCrearGiradorServiceDTO" name="RespuestaCrearGiradorServiceDTO"/>
+  </s1:message>
+  <s1:message name="registrarAmortizacion">
+    <s1:part element="s2:solicitudAmortizacionSaldosServiceDTO" name="solicitudAmortizacionSaldosServiceDTO"/>
+  </s1:message>
+  <s1:message name="registrarAmortizacionResponse">
+    <s1:part element="s2:RespuestaAmortizacionSaldosServiceDTO" name="RespuestaAmortizacionSaldosServiceDTO"/>
+  </s1:message>
+  <s1:message name="notificacionPagaresFirmados">
+    <s1:part element="s2:pagaresFirmadosDto" name="pagaresFirmadosDto"/>
+  </s1:message>
+  <s1:message name="notificacionPagaresFirmadosResponse">
+    <s1:part element="s2:RespuestaPagaresFirmadosDTO" name="RespuestaPagaresFirmadosDTO"/>
+  </s1:message>
+  <s1:message name="firmarPagares">
+    <s1:part element="s2:solicitudFirmarPagareDTO" name="solicitudFirmarPagareDTO"/>
+  </s1:message>
+  <s1:message name="firmarPagaresResponse">
+    <s1:part element="s2:RespuestaFirmarPagaresDTO" name="RespuestaFirmarPagaresDTO"/>
+  </s1:message>
+  <s1:message name="notificacionDesembolsoAnotacionEnCuenta">
+    <s1:part element="s2:desembolsoAnotarCuentaDto" name="desembolsoAnotarCuentaDto"/>
+  </s1:message>
+  <s1:message name="notificacionDesembolsoAnotacionEnCuentaResponse">
+    <s1:part element="s2:RespuestaDesembolsoAnotarCuentaDTO" name="RespuestaDesembolsoAnotarCuentaDTO"/>
+  </s1:message>
+  <s1:message name="CreacionGiradoresCodificados">
+    <s1:part element="s2:crearGiradorDaneServiceDTO" name="crearGiradorDaneServiceDTO"/>
+  </s1:message>
+  <s1:message name="CreacionGiradoresCodificadosResponse">
+    <s1:part element="s2:RespuestaCrearGiradorDaneServiceDTO" name="RespuestaCrearGiradorDaneServiceDTO"/>
+  </s1:message>
+  <s1:portType name="SDLService" wsp:PolicyURIs="#PolicySign">
+    <s1:operation name="consultarPagares" parameterOrder="listaConsultarPagaresDTO">
+      <s1:input message="s2:consultarPagares"/>
+      <s1:output message="s2:consultarPagaresResponse"/>
+    </s1:operation>
+    <s1:operation name="cancelacionPagares" parameterOrder="listaCancelacionPagaresServiceDTO">
+      <s1:input message="s2:cancelacionPagares"/>
+      <s1:output message="s2:cancelacionPagaresResponse"/>
+    </s1:operation>
+    <s1:operation name="CreacionPagaresCodificado" parameterOrder="crearPagareDaneServiceDTO">
+      <s1:input message="s2:CreacionPagaresCodificado"/>
+      <s1:output message="s2:CreacionPagaresCodificadoResponse"/>
+    </s1:operation>
+    <s1:operation name="creacionPagares" parameterOrder="solicitud">
+      <s1:input message="s2:creacionPagares"/>
+      <s1:output message="s2:creacionPagaresResponse"/>
+    </s1:operation>
+    <s1:operation name="CreacionGiradores" parameterOrder="crearGiradorServiceDto">
+      <s1:input message="s2:CreacionGiradores"/>
+      <s1:output message="s2:CreacionGiradoresResponse"/>
+    </s1:operation>
+    <s1:operation name="registrarAmortizacion" parameterOrder="solicitudAmortizacionSaldosServiceDTO">
+      <s1:input message="s2:registrarAmortizacion"/>
+      <s1:output message="s2:registrarAmortizacionResponse"/>
+    </s1:operation>
+    <s1:operation name="notificacionPagaresFirmados" parameterOrder="pagaresFirmadosDto">
+      <s1:input message="s2:notificacionPagaresFirmados"/>
+      <s1:output message="s2:notificacionPagaresFirmadosResponse"/>
+    </s1:operation>
+    <s1:operation name="firmarPagares" parameterOrder="solicitudFirmarPagareDTO">
+      <s1:input message="s2:firmarPagares"/>
+      <s1:output message="s2:firmarPagaresResponse"/>
+    </s1:operation>
+    <s1:operation name="notificacionDesembolsoAnotacionEnCuenta" parameterOrder="desembolsoAnotarCuentaDto">
+      <s1:input message="s2:notificacionDesembolsoAnotacionEnCuenta"/>
+      <s1:output message="s2:notificacionDesembolsoAnotacionEnCuentaResponse"/>
+    </s1:operation>
+    <s1:operation name="CreacionGiradoresCodificados" parameterOrder="crearGiradorDaneServiceDTO">
+      <s1:input message="s2:CreacionGiradoresCodificados"/>
+      <s1:output message="s2:CreacionGiradoresCodificadosResponse"/>
+    </s1:operation>
+  </s1:portType>
+  <s1:binding name="SDLServiceSoapBinding" type="s2:SDLService">
+    <s3:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <s1:operation name="consultarPagares">
+      <s3:operation soapAction="ConsultarPagares" style="document"/>
+      <s1:input>
+        <s3:body parts="listaConsultarPagaresDTO" use="literal"/>
+        <wsp:Policy>
+          <wsp:PolicyReference URI="#PolicyAuth"/>
+        </wsp:Policy>
+      </s1:input>
+      <s1:output>
+        <s3:body parts="RespuestaConsultarPagaresDTO" use="literal"/>
+      </s1:output>
+    </s1:operation>
+    <s1:operation name="cancelacionPagares">
+      <s3:operation soapAction="CancelacionPagares" style="document"/>
+      <s1:input>
+        <s3:body parts="listaCancelacionPagaresServiceDTO" use="literal"/>
+        <wsp:Policy>
+          <wsp:PolicyReference URI="#PolicyAuth"/>
+        </wsp:Policy>
+      </s1:input>
+      <s1:output>
+        <s3:body parts="RespuestaCancelacionPagaresServiceDTO" use="literal"/>
+      </s1:output>
+    </s1:operation>
+    <s1:operation name="CreacionPagaresCodificado">
+      <s3:operation soapAction="CreacionPagaresCodificado" style="document"/>
+      <s1:input>
+        <s3:body parts="crearPagareDaneServiceDTO" use="literal"/>
+        <wsp:Policy>
+          <wsp:PolicyReference URI="#PolicyAuth"/>
+        </wsp:Policy>
+      </s1:input>
+      <s1:output>
+        <s3:body parts="RespuestaDocumentoPagareDaneServiceDTO" use="literal"/>
+      </s1:output>
+    </s1:operation>
+    <s1:operation name="creacionPagares">
+      <s3:operation soapAction="CreacionPagares" style="document"/>
+      <s1:input>
+        <s3:body parts="solicitud" use="literal"/>
+        <wsp:Policy>
+          <wsp:PolicyReference URI="#PolicyAuth"/>
+        </wsp:Policy>
+      </s1:input>
+      <s1:output>
+        <s3:body parts="RespuestaDocumentoPagareServiceDTO" use="literal"/>
+      </s1:output>
+    </s1:operation>
+    <s1:operation name="CreacionGiradores">
+      <s3:operation soapAction="CreacionGiradores" style="document"/>
+      <s1:input>
+        <s3:body parts="crearGiradorServiceDto" use="literal"/>
+        <wsp:Policy>
+          <wsp:PolicyReference URI="#PolicyAuth"/>
+        </wsp:Policy>
+      </s1:input>
+      <s1:output>
+        <s3:body parts="RespuestaCrearGiradorServiceDTO" use="literal"/>
+      </s1:output>
+    </s1:operation>
+    <s1:operation name="registrarAmortizacion">
+      <s3:operation soapAction="RegistrarAmortizacion" style="document"/>
+      <s1:input>
+        <s3:body parts="solicitudAmortizacionSaldosServiceDTO" use="literal"/>
+        <wsp:Policy>
+          <wsp:PolicyReference URI="#PolicyAuth"/>
+        </wsp:Policy>
+      </s1:input>
+      <s1:output>
+        <s3:body parts="RespuestaAmortizacionSaldosServiceDTO" use="literal"/>
+      </s1:output>
+    </s1:operation>
+    <s1:operation name="notificacionPagaresFirmados">
+      <s3:operation soapAction="NotificacionPagaresFirmados" style="document"/>
+      <s1:input>
+        <s3:body parts="pagaresFirmadosDto" use="literal"/>
+        <wsp:Policy>
+          <wsp:PolicyReference URI="#PolicyAuth"/>
+        </wsp:Policy>
+      </s1:input>
+      <s1:output>
+        <s3:body parts="RespuestaPagaresFirmadosDTO" use="literal"/>
+      </s1:output>
+    </s1:operation>
+    <s1:operation name="firmarPagares">
+      <s3:operation soapAction="FirmarPagares" style="document"/>
+      <s1:input>
+        <s3:body parts="solicitudFirmarPagareDTO" use="literal"/>
+        <wsp:Policy>
+          <wsp:PolicyReference URI="#PolicyAuth"/>
+        </wsp:Policy>
+      </s1:input>
+      <s1:output>
+        <s3:body parts="RespuestaFirmarPagaresDTO" use="literal"/>
+      </s1:output>
+    </s1:operation>
+    <s1:operation name="notificacionDesembolsoAnotacionEnCuenta">
+      <s3:operation soapAction="NotificacionDesembolsoAnotacionEnCuenta" style="document"/>
+      <s1:input>
+        <s3:body parts="desembolsoAnotarCuentaDto" use="literal"/>
+        <wsp:Policy>
+          <wsp:PolicyReference URI="#PolicyAuth"/>
+        </wsp:Policy>
+      </s1:input>
+      <s1:output>
+        <s3:body parts="RespuestaDesembolsoAnotarCuentaDTO" use="literal"/>
+      </s1:output>
+    </s1:operation>
+    <s1:operation name="CreacionGiradoresCodificados">
+      <s3:operation soapAction="CreacionGiradoresCodificados" style="document"/>
+      <s1:input>
+        <s3:body parts="crearGiradorDaneServiceDTO" use="literal"/>
+        <wsp:Policy>
+          <wsp:PolicyReference URI="#PolicyAuth"/>
+        </wsp:Policy>
+      </s1:input>
+      <s1:output>
+        <s3:body parts="RespuestaCrearGiradorDaneServiceDTO" use="literal"/>
+      </s1:output>
+    </s1:operation>
+  </s1:binding>
+  <s1:service name="SDLService">
+    <s1:port binding="s2:SDLServiceSoapBinding" name="SDLServiceSoapPort">
+      <s3:address location="https://portal.deceval.com.co:1444/sdlservices/SDLService"/>
+    </s1:port>
+  </s1:service>
+</s1:definitions>
